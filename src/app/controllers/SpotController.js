@@ -1,12 +1,16 @@
+import Sequelize from 'sequelize';
 import File from '../models/File';
 import User from '../models/User';
 import Spot from '../models/Spot';
 
 class SpotController {
   async index(req, res) {
+    const { Op } = Sequelize;
     const { tech } = req.query;
     const spots = await Spot.findAll({
-      where: { techs: [{ techs: tech }] },
+      where: {
+        techs: { [Op.contains]: [tech] },
+      },
     });
 
     return res.json(spots);
