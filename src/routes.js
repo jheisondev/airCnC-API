@@ -7,6 +7,7 @@ import auth from './app/middlewares/auth';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import SpotController from './app/controllers/SpotController';
+import SpotProfileController from './app/controllers/SpotProfileController';
 
 const routes = new Router();
 const upload = multer(uploadConfig);
@@ -20,5 +21,6 @@ routes.use(auth);
 
 routes.post('/spots', upload.single('thumbnail'), SpotController.store);
 routes.get('/spots', SpotController.index);
+routes.get('/spotsProfile', SpotProfileController.show);
 
 export default routes;

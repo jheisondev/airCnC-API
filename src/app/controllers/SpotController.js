@@ -11,6 +11,12 @@ class SpotController {
       where: {
         techs: { [Op.contains]: [tech] },
       },
+      include: [
+        {
+          model: File,
+          attributes: ['id', 'name', 'path'],
+        },
+      ],
     });
 
     return res.json(spots);
