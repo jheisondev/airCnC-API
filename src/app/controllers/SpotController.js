@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import * as Yup from 'yup';
 import File from '../models/File';
 import User from '../models/User';
 import Spot from '../models/Spot';
@@ -23,6 +24,19 @@ class SpotController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      company: Yup.string()
+        .required('Informe o nome da companhia!')
+        .min(3, 'O nome deve conter mais de 3 letras!'),
+      price: Yup.number().required('Informe valor!'),
+      techs: Yup.array()
+        .required('Informe email!')
+        .email('Informe email válido!'),
+    });
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Dados inválidos!' });
+    }
+
     const { originalname: name, filename: path } = req.file;
     const { company, price, techs } = req.body;
     const { userId } = req;
