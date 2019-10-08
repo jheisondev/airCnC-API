@@ -1,5 +1,8 @@
 import * as Yup from 'yup';
 import Booking from '../models/Booking';
+import Spot from '../models/Spot';
+import User from '../models/User';
+import File from '../models/File';
 
 module.exports = {
   async store(req, res) {
@@ -18,13 +21,40 @@ module.exports = {
     const { date } = req.body;
 
     try {
-      const booking = await Booking.create({
+      await Booking.create({
         id_user: userId,
         id_spot,
         date,
       });
 
-      return res.json(booking);
+      const bookingUserSpot = await Booking.findAll({
+        where: { id_user: userId },
+        attributes: ['id', 'id_user', 'id_spot', 'date'],
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'user_name', 'email', 'id_avatar'],
+            include: [
+              {
+                model: File,
+                attributes: ['id', 'name', 'path'],
+              },
+            ],
+          },
+          {
+            model: Spot,
+            attributes: ['id', 'company', 'price', 'techs', 'id_thumbnail'],
+            include: [
+              {
+                model: File,
+                attributes: ['id', 'name', 'path'],
+              },
+            ],
+          },
+        ],
+      });
+
+      return res.json(bookingUserSpot);
     } catch (error) {
       return res.json(error);
     }
