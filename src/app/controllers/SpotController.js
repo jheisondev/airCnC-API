@@ -15,7 +15,7 @@ class SpotController {
       include: [
         {
           model: File,
-          attributes: ['id', 'name', 'path'],
+          attributes: ['id', 'name', 'path', 'url'],
         },
       ],
     });

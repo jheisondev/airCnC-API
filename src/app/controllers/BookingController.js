@@ -37,7 +37,7 @@ module.exports = {
             include: [
               {
                 model: File,
-                attributes: ['id', 'name', 'path'],
+                attributes: ['id', 'name', 'path', 'url'],
               },
             ],
           },
@@ -47,7 +47,7 @@ module.exports = {
             include: [
               {
                 model: File,
-                attributes: ['id', 'name', 'path'],
+                attributes: ['id', 'name', 'path', 'url'],
               },
             ],
           },
