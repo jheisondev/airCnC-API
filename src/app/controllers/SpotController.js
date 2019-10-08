@@ -29,9 +29,7 @@ class SpotController {
         .required('Informe o nome da companhia!')
         .min(3, 'O nome deve conter mais de 3 letras!'),
       price: Yup.number().required('Informe valor!'),
-      techs: Yup.array()
-        .required('Informe email!')
-        .email('Informe email válido!'),
+      techs: Yup.string().required('Informe no minímo uma uma tecnologia!'),
     });
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Dados inválidos!' });
